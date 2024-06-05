@@ -4,11 +4,12 @@ import dotenv from 'dotenv'
 import connectDb from './helpers/Dbconfig.js'
 import cookieParser from 'cookie-parser';
 import productRoute from './routes/product.route.js'
+import cors from 'cors'
 
 dotenv.config();
 connectDb(process.env.DATABASE_URL)
 const app = express()
-
+app.use(cors())
 app.use(express.json())
 app.use(cookieParser())
 app.use(express.urlencoded({ extended: false }))

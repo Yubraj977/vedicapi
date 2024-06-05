@@ -20,6 +20,7 @@ async function uploadFileInCloudinary(localFilePath) {
     } catch (error) {
         console.log('Error uploading to coudinary',error)
         throw error;
+        fs.unlinkSync(localFilePath);
     }
 
 }
