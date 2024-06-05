@@ -19,8 +19,9 @@ async function uploadFileInCloudinary(localFilePath) {
         return uploadResult
     } catch (error) {
         console.log('Error uploading to coudinary',error)
-        throw error;
         fs.unlinkSync(localFilePath);
+        throw error;
+       
     }
 
 }
