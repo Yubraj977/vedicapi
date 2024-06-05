@@ -34,26 +34,33 @@ export async function createProduct(req,res,next){
 
 export async function updateProduct(req,res,next){
     const {id}=req.params;
+  
+   
     const {name,description,price,quantity,category}=req.body;
-    console.log(name)
+  
     if(!name || !description || !price || !quantity || !category){
         return next(errorHandler(400,'please provide all the fields'))
     }
 
     try {
-      const localFilePath=req.file.path
-      const uploadResult=await uploadFileInCloudinary(localFilePath)
-      const imageUrl=await uploadResult.secure_url;
+      
+   
       const myProduct=await productModel.findById(id);
       if(!myProduct){
         return next(errorHandler(404,'product not found'))
+      }
+      if(req.file&&req.file.path){
+        const localFilePath=req.file.path
+        const uploadResult=await uploadFileInCloudinary(localFilePath)
+        const imageUrl=await uploadResult.secure_url;
+        myProduct.image=imageUrl;
       }
       myProduct.name=name;
       myProduct.description=description;
       myProduct.price=price;
       myProduct.quantity=quantity;
       myProduct.category=category;
-      myProduct.image=imageUrl;
+      
       await myProduct.save();
   
   
@@ -91,7 +98,10 @@ export async function getAllProducts(req,res,next){
         products
     })
   } catch (error) {
+
+    clg(error)
     next(error)
+  
   }
   
 }
