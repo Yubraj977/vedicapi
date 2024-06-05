@@ -4,7 +4,6 @@ import productModel from "../models/products.model.js";
 import { errorHandler } from "../helpers/Error.js";
 
 export async function createProduct(req,res,next){
-    
     const {name,description,price,quantity,category}=req.body;
     if(!name || !description || !price || !quantity || !category){
         return next(errorHandler(400,'please provide all the fields'))
@@ -13,7 +12,7 @@ export async function createProduct(req,res,next){
     const myProduct=new productModel({name,description,price,quantity,category});
   try {
     if(!req.file){
-      return next(erororHandler(400,'please provide image'))
+      return next(errorHandler(400,'please provide image'))
     }
     const localFilePath=req.file.path
   
