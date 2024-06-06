@@ -90,19 +90,53 @@ export async function deleteProduct(req,res,next){
 
 
 export async function getAllProducts(req,res,next){
-  try {
-    const products=await productModel.find();
-    res.json({
-        success:true,
-        message:'product fetched successfully',
-        products
-    })
-  } catch (error) {
+const startIndex=parseInt(req.query.startIndex)||0;
+const limit=parseInt(req.query.limit)||10;
+const sortDirection=req.query.order==='asc'?1:-1;
+const category=req.query.category;
+const product=await productModel.find({
+  ...(req.query.searchTerm&&{
+    $or:[
+      {name:{$regex:req.query.searchTerm,$options:'i'}},
+    ]
+  }),
+  ...(category&&{category}),
 
-    clg(error)
-    next(error)
+});
+
+res.status(200).json({
+  product,
+
+})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  // try {
+  //   const products=await productModel.find();
+  //   res.json({
+  //       success:true,
+  //       message:'product fetched successfully',
+  //       products
+  //   })
+  // } catch (error) {
+
+  //   clg(error)
+  //   next(error)
   
-  }
+  // }
   
 }
 export async function SingleProductDetial(req,res,next){
