@@ -92,12 +92,11 @@ export async function deleteProduct(req,res,next){
 export async function getAllProducts(req, res, next) {
   const startIndex = parseInt(req.query.startIndex) || 0;
   const limit = parseInt(req.query.limit) || 10;
-  const sortPrice = req.query.price === 'asc' ? 1 : -1;
-  const sortDate = req.query.date === 'asc' ? 1 : -1;
+  const sortPrice = req.query.price === 'asc' ? 1 : req.query.price === 'dsc' ? -1 : null;
+  const sortDate = req.query.date === 'asc' ? 1 : req.query.date === 'dsc' ? -1 : null;
   const category = req.query.category;
 
   const searchTerm = req.query.searchTerm;
-  console.log(searchTerm)
 
   const searchConditions = {
     ...(searchTerm && {
@@ -107,10 +106,13 @@ export async function getAllProducts(req, res, next) {
     }),
     ...(category && { category: category }),
   };
+const sortConditions={}
+if (sortPrice !== null) sortConditions.price = sortPrice;
+if (sortDate !== null) sortConditions.createdAt = sortDate;
 
   const products = await productModel
     .find(searchConditions)
-    .sort({ price: sortPrice, createdAt: sortDate })
+    .sort({ sortConditions })
     .skip(startIndex)
     .limit(limit);
 
