@@ -65,7 +65,7 @@ export async function updateProduct(req,res,next){
   
   
   
-      res.json({
+      res.status(200).json({
           success:true,
           message:'product updated successfully',
           myProduct
@@ -89,56 +89,35 @@ export async function deleteProduct(req,res,next){
 }
 
 
-export async function getAllProducts(req,res,next){
-const startIndex=parseInt(req.query.startIndex)||0;
-const limit=parseInt(req.query.limit)||10;
-const sortDirection=req.query.order==='asc'?1:-1;
-const category=req.query.category;
-const product=await productModel.find({
-  ...(req.query.searchTerm&&{
-    $or:[
-      {name:{$regex:req.query.searchTerm,$options:'i'}},
-    ]
-  }),
-  ...(category&&{category}),
+export async function getAllProducts(req, res, next) {
+  const startIndex = parseInt(req.query.startIndex) || 0;
+  const limit = parseInt(req.query.limit) || 10;
+  const sortDirection = req.query.order === 'asc' ? 1 : -1;
+  const category = req.query.category;
 
-});
+  const searchTerm = req.query.searchTerm;
+  console.log(searchTerm)
 
-res.status(200).json({
-  product,
+  const searchConditions = {
+    ...(searchTerm && {
+      $or: [
+        { name: { $regex: searchTerm, $options: 'i' } },
+      ],
+    }),
+    ...(category && { category: category }),
+  };
 
-})
+  const products = await productModel
+    .find(searchConditions)
+    .sort({ createdAt: sortDirection })
+    .skip(startIndex)
+    .limit(limit);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  // try {
-  //   const products=await productModel.find();
-  //   res.json({
-  //       success:true,
-  //       message:'product fetched successfully',
-  //       products
-  //   })
-  // } catch (error) {
-
-  //   clg(error)
-  //   next(error)
-  
-  // }
-  
+  res.status(200).json({
+    products,
+  });
 }
+
 export async function SingleProductDetial(req,res,next){
 try {
   const {id}=req.params;
