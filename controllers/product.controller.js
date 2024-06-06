@@ -112,7 +112,7 @@ if (sortDate !== null) sortConditions.createdAt = sortDate;
 
   const products = await productModel
     .find(searchConditions)
-    .sort({ sortConditions })
+    .sort( sortConditions )
     .skip(startIndex)
     .limit(limit);
 
