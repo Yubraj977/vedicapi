@@ -92,8 +92,8 @@ export async function deleteProduct(req,res,next){
 export async function getAllProducts(req, res, next) {
   const startIndex = parseInt(req.query.startIndex) || 0;
   const limit = parseInt(req.query.limit) || 10;
-  const sortPrice = req.query.price === 'asc' ? 1 : req.query.price === 'dsc' ? -1 : null;
-  const sortDate = req.query.date === 'asc' ? 1 : req.query.date === 'dsc' ? -1 : null;
+  const sortPrice = req.query.price === 'price-asc' ? 1 : req.query.price === 'price-dsc' ? -1 : null;
+  const sortDate = req.query.date === 'date-asc' ? 1 : req.query.date === 'date-dsc' ? -1 : null;
   const category = req.query.category;
 
   const searchTerm = req.query.searchTerm;
