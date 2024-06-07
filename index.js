@@ -11,14 +11,22 @@ import cors from 'cors'
 dotenv.config();
 connectDb(process.env.DATABASE_URL)
 const app = express()
-app.use(cors())
+
+const allowedOrigins = [
+  'https://vedichoneyproduct.com/',
+  'http://localhost:5173',
+]
+app.use(cors({
+  origin: allowedOrigins,
+  credentials: true
+}))
 app.use(express.json())
 app.use(cookieParser())
 app.use(express.urlencoded({ extended: false }))
 app.use('/api/product',productRoute)
 app.use('/api/blog',BlogRoute)
 app.use('/api/auth',authRoute)
-app.get('/', (req, res) => {
+app.post('/', (req, res) => {
   res.send('Hello World!')
 })
 
