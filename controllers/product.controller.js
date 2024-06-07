@@ -68,7 +68,7 @@ export async function updateProduct(req,res,next){
       res.status(200).json({
           success:true,
           message:'product updated successfully',
-          products
+          myProduct
       })
  
   
