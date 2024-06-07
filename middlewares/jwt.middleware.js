@@ -1,6 +1,8 @@
 import userModel from "../models/user.model.js";
 import jwt from 'jsonwebtoken'; // Ensure to import jwt if not already done
 import { errorHandler } from "../helpers/Error.js";
+import dotenv from 'dotenv'
+dotenv.config()
 export async function checkAuth(req, res, next) {
     const token = req.cookies.access_token;
     if (!token) {
