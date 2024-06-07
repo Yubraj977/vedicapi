@@ -5,6 +5,7 @@ import connectDb from './helpers/Dbconfig.js'
 import cookieParser from 'cookie-parser';
 import productRoute from './routes/product.route.js'
 import BlogRoute from './routes/blog.route.js'
+import authRoute from './routes/auth.route.js'
 import cors from 'cors'
 
 dotenv.config();
@@ -16,6 +17,7 @@ app.use(cookieParser())
 app.use(express.urlencoded({ extended: false }))
 app.use('/api/product',productRoute)
 app.use('/api/blog',BlogRoute)
+app.use('/api/auth',authRoute)
 app.get('/', (req, res) => {
   res.send('Hello World!')
 })

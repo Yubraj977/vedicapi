@@ -1,4 +1,5 @@
 import mongoose, { Schema } from "mongoose";
+import userModel from "./user.model.js";
 import productModel from "./products.model.js";
 const reviewSchema=new mongoose.Schema({  
     ProductId:{
@@ -7,7 +8,7 @@ const reviewSchema=new mongoose.Schema({
     },
     userId:{
         type:Schema.Types.ObjectId,
-        ref:'productModel'
+        ref:'userModel'
     },
     rating:{
         type:Number,

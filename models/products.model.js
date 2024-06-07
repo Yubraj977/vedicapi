@@ -10,7 +10,8 @@ const productSchema=new mongoose.Schema({
     },
     price:{
         type:Number,
-        required:true
+        required:true,
+        min:0
     },
     quantity:{
         type:Number,
@@ -22,7 +23,7 @@ const productSchema=new mongoose.Schema({
     },
     image:{
         type:String,
-        required:true
+        required:true,
     },
     averageRating:{
         type:Number,
