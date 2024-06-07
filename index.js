@@ -13,7 +13,7 @@ connectDb(process.env.DATABASE_URL)
 const app = express()
 
 const allowedOrigins = [
-  'https://vedichoneyproduct.com/',
+  'https://vedichoneyproduct.com',
   'http://localhost:5173',
 ]
 app.use(cors({
