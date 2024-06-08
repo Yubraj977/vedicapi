@@ -115,11 +115,12 @@ if (sortDate !== null) sortConditions.createdAt = sortDate;
     .sort( sortConditions )
     .skip(startIndex)
     .limit(limit);
-
+  const totalProducts=await productModel.countDocuments(searchConditions);
   res.status(200).json({
     success: true,
     message: 'Products fetched successfully',
     products:products,
+    totalProducts
   });
 }
 
@@ -130,7 +131,8 @@ try {
   res.json({
     success:true,
     message:'product fetched successfully',
-    product
+    product,
+    
   })
 
 

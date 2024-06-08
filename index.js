@@ -27,7 +27,7 @@ app.use(express.urlencoded({ extended: false }))
 app.use('/api/product',productRoute)
 app.use('/api/blog',BlogRoute)
 app.use('/api/auth',authRoute)
-app.use('/api/user',checkAuth,userRoute)
+app.use('/api/user',userRoute)
 app.post('/', (req, res) => {
   res.send('Hello World!')
 })

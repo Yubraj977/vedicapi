@@ -4,7 +4,10 @@ import { errorHandler } from "../helpers/Error.js";
 import dotenv from 'dotenv'
 dotenv.config()
 export async function checkAuth(req, res, next) {
+    console.log('Cookies:', req.cookies);
     const token = req.cookies.access_token;
+    console.log(token);
+  
     if (!token) {
         return next(errorHandler(401, 'Please login first. Not Logged in.'));
     }

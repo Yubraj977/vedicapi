@@ -25,20 +25,14 @@ export async function signup(req, res, next) {
         const hashPassword = bcrypt.hashSync(password, 10);
         const myUser = new userModel({ name, email, password: hashPassword })
         await myUser.save();
-        // const token = createToken(myUser._id);
-        // res.cookie('access_token', token, {
-        //     httpOnly: true, // Ensures the cookie is only accessible by the web server
-        //     secure: process.env.NODE_ENV === 'production', // Ensures the cookie is sent over HTTPS
-        //     sameSite: 'Strict', // CSRF protection
-        //     maxAge: 60 * 1000 // Cookie expiration time (1 day)
-        // })
         res.status(200).json({
                 success: true,
                 message: 'User Created successfully',
                 user: {
                     name: myUser.name,
                     email: myUser.email,
-                    profileImage: myUser.profileImage
+                    profileImage: myUser.profileImage,
+                    userType: myUser.userType
                 }
             })
      
@@ -53,7 +47,7 @@ export async function signup(req, res, next) {
 
 
 export async function googleLogin(req, res, next) {
-    const { name, email, profile_url, emailVerified } = req.body
+    const { name, email, profileImage, emailVerified } = req.body
     const randomPassword = 'this!@#$@#$@#$@#$'
     if (!name || !email) {
         return next(errorHandler(400, 'please provide all the fields'))
@@ -72,7 +66,7 @@ export async function googleLogin(req, res, next) {
                 httpOnly: true, // Ensures the cookie is only accessible by the web server
                 secure: process.env.NODE_ENV === 'production', // Ensures the cookie is sent over HTTPS
                 sameSite: 'Strict', // CSRF protection
-                maxAge: 60 * 1000 // Cookie expiration time (1 day)
+                maxAge: 3*60 * 1000 // Cookie expiration time (1 day)
             });
             return res.status(200).json({
                     success: true,
@@ -80,7 +74,8 @@ export async function googleLogin(req, res, next) {
                     user: {
                         name: alreadyExist.name,
                         email: alreadyExist.email,
-                        profileImage: alreadyExist.profileImage
+                        profileImage: alreadyExist.profileImage,
+                        userType: alreadyExist.userType
                     }
                 })
 
@@ -90,7 +85,7 @@ export async function googleLogin(req, res, next) {
         if (!alreadyExist) {
 
             const hashPassword = bcrypt.hashSync(randomPassword, 10);
-            const myUser = new userModel({ name, email, profileImage: profile_url, isverified: emailVerified, password: hashPassword })
+            const myUser = new userModel({ name, email, profileImage: profileImage, isverified: emailVerified, password: hashPassword })
             await myUser.save();
 
             const notAlreadyExistToken = createToken(myUser._id);
@@ -98,7 +93,7 @@ export async function googleLogin(req, res, next) {
                 httpOnly: true, // Ensures the cookie is only accessible by the web server
                 secure: process.env.NODE_ENV === 'production', // Ensures the cookie is sent over HTTPS
                 sameSite: 'Strict', // CSRF protection
-                maxAge: 60 * 1000 // Cookie expiration time (1 day)
+                maxAge:3* 60 * 1000 // Cookie expiration time (1 day)
             }).status(200).json({
                 token: createToken(myUser._id),
                 success: true,
@@ -106,7 +101,8 @@ export async function googleLogin(req, res, next) {
                 user:{
                     name:myUser.name,
                     email:myUser.email,
-                    profileImage:myUser.profileImage
+                    profileImage:myUser.profileImage,
+                    userType:myUser.userType
                 }
             })
         }
@@ -146,7 +142,8 @@ export async function lgoin(req, res, next) {
                 user: {
                     name: isEmailExist.name,
                     email: isEmailExist.email,
-                    profileImage: isEmailExist.profileImage
+                    profileImage: isEmailExist.profileImage,
+                    userType: isEmailExist.userType
                 }
             })
     } catch (error) {
