@@ -2,7 +2,7 @@ import mongoose, { Schema } from "mongoose";
 import userModel from "./user.model.js";
 import productModel from "./products.model.js";
 const reviewSchema=new mongoose.Schema({  
-    ProductId:{
+    productId:{
         type:Schema.Types.ObjectId,
         ref:productModel
     },
@@ -16,10 +16,10 @@ const reviewSchema=new mongoose.Schema({
         min:1,
         max:5
     },
-    Comment:{
+    comment:{
         type:String,
 
     }
 },{timestamps:true})
-const reviewModel=mongoose.model("review",reviewModel)
+const reviewModel=mongoose.model("review",reviewSchema)
 export default reviewModel

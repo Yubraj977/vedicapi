@@ -1,6 +1,6 @@
 import express from 'express'
 import upload from '../middlewares/multer.middleware.js'
-
+import { checkAuth } from '../middlewares/jwt.middleware.js'
 
 import {getAllProducts,SingleProductDetial,createProduct,updateProduct,deleteProduct} from '../controllers/product.controller.js'
 const router =express.Router()
