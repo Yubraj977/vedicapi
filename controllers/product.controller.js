@@ -1,5 +1,4 @@
 import uploadFileInCloudinary from "../helpers/cloudinary.js"
-import mongoose from "mongoose";
 import productModel from "../models/products.model.js";
 import { errorHandler } from "../helpers/Error.js";
 

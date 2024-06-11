@@ -4,11 +4,11 @@ import productModel from "./products.model.js";
 const reviewSchema=new mongoose.Schema({  
     ProductId:{
         type:Schema.Types.ObjectId,
-        ref:'productModel'
+        ref:productModel
     },
     userId:{
         type:Schema.Types.ObjectId,
-        ref:'userModel'
+        ref:userModel
     },
     rating:{
         type:Number,
