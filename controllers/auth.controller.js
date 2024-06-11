@@ -66,7 +66,7 @@ export async function googleLogin(req, res, next) {
                 httpOnly: true, // Ensures the cookie is only accessible by the web server
                 secure: process.env.NODE_ENV === 'production', // Ensures the cookie is sent over HTTPS
                 sameSite: 'Strict', // CSRF protection
-                maxAge: 3*60 * 1000 // Cookie expiration time (1 day)
+                maxAge: 30*60 * 1000 // Cookie expiration time (1 day)
             });
             return res.status(200).json({
                     success: true,
@@ -93,7 +93,7 @@ export async function googleLogin(req, res, next) {
                 httpOnly: true, // Ensures the cookie is only accessible by the web server
                 secure: process.env.NODE_ENV === 'production', // Ensures the cookie is sent over HTTPS
                 sameSite: 'Strict', // CSRF protection
-                maxAge:3* 60 * 1000 // Cookie expiration time (1 day)
+                maxAge:30* 60 * 1000 // Cookie expiration time (1 day)
             }).status(200).json({
                 token: createToken(myUser._id),
                 success: true,
@@ -134,7 +134,7 @@ export async function lgoin(req, res, next) {
             httpOnly: true, // Ensures the cookie is only accessible by the web server
             secure: process.env.NODE_ENV === 'production', // Ensures the cookie is sent over HTTPS
             sameSite: 'Strict', // CSRF protection
-            maxAge: 60 * 1000 // Cookie expiration time (1 day)
+            maxAge: 10*60 * 1000 // Cookie expiration time (1 day)
         }).status(200).json({
                 success: true,
                 message: 'login successfully',
@@ -183,4 +183,9 @@ export  async function stillLogin(req, res, next) {
         user
     })
     
+}
+
+
+export async function resetPassword(req, res, next) {
+
 }

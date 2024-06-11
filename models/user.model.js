@@ -25,7 +25,11 @@ const userSchema=new mongoose.Schema({
        type:String,
        enum:["admin","user",'moderator'],
        default:"user"
-   }
+   },
+   mobile:{
+    type:Number,
+    default:977
+   },
 },{timestamps:true})
 const userModel=mongoose.model("user",userSchema)
 export default userModel
