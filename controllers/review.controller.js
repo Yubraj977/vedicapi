@@ -1,20 +1,27 @@
 import reviewModel from "../models/reviews.model.js";
 import { errorHandler } from "../helpers/Error.js";
-
-export async function singleProductReview(req,res,next){
-   const {productId}=req.query
-   if(!productId){
-    return next(errorHandler(400,'please provide product id'))
-   }
-   try {
-    const productReviews=await reviewModel.find({productId})
-    res.send(productReviews)
-   } catch (error) {
-    next(errorHandler(500,error.message))
-   }
-  
-
-}
+import userModel from "../models/user.model.js";
+export async function singleProductReview(req, res, next) {
+    const { productId } = req.query;
+    
+    if (!productId) {
+        return next(errorHandler(400, 'Please provide product ID'));
+    }
+ 
+    try {
+        const productReviews = await reviewModel.find({ productId }).populate('userId', 'name profileImage'); 
+        const avgrt = productReviews.reduce((acc, review) => acc + review.rating, 0) / productReviews.length+1;
+        const averageRating=avgrt.toFixed(2)
+        res.status(200).json({
+            success: true,
+            productReviews,
+            averageRating
+            
+        });
+    } catch (error) {
+        next(errorHandler(500, error.message));
+    }
+ }
 
 export async function AllProductReview(){
     
