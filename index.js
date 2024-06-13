@@ -8,6 +8,7 @@ import BlogRoute from './routes/blog.route.js'
 import authRoute from './routes/auth.route.js'
 import userRoute from './routes/user.route.js'
 import reviewRoute from './routes/review.route.js'
+import orderRoute from './routes/order.route.js'
 import cors from 'cors'
 import { checkAuth } from './middlewares/jwt.middleware.js';
 dotenv.config();
@@ -30,6 +31,7 @@ app.use('/api/blog',BlogRoute)
 app.use('/api/auth',authRoute)
 app.use('/api/user',userRoute)
 app.use('/api/review',reviewRoute)
+app.use('/api/order',orderRoute)
 app.post('/', (req, res) => {
   res.send('Hello World!')
 })
