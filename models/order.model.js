@@ -26,10 +26,7 @@ const orderSchema=new mongoose.Schema({
            phoneNo:{
                type:Number,
                required:true
-           },pinCode:{
-            type:Number,
-            required:true
-        }
+           }
        },
        orderItems:[
         {
@@ -51,17 +48,22 @@ const orderSchema=new mongoose.Schema({
             },
             product:{
                 type:mongoose.Schema.Types.ObjectId,
-                ref:"productModel",
+                ref:"product",
                 required:true
             }
         }
        ],
        user:{
            type:mongoose.Schema.Types.ObjectId,
-           ref:"userModel",
+           ref:"user",
            required:true
        },
        paymentInfo:{
+        deliveryMethod:{
+            type:String,
+            enum:["fast-delivery","free-delivery","fastest-express-delivery"],
+            default:"Cash On Delivery"
+        },
            id:{
                type:String,
                required:true
@@ -70,6 +72,12 @@ const orderSchema=new mongoose.Schema({
                type:String,
                required:true
            }
+       },
+
+       paymentMethod:{
+           type:String,
+           enum:["cash-on-delivery","esewa","khalti","credit-card"],
+           default:"cash-on-delivery"
        },
        paidAt:{
            type:Date,
