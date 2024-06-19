@@ -64,6 +64,10 @@ const orderSchema=new mongoose.Schema({
             enum:["fast-delivery","free-delivery","fastest-express-delivery"],
             default:"Cash On Delivery"
         },
+        paymentMethod:{
+            type:String,
+            default:"cash-on-delivery"
+        },
            id:{
                type:String,
                required:true
@@ -74,11 +78,7 @@ const orderSchema=new mongoose.Schema({
            }
        },
 
-       paymentMethod:{
-           type:String,
-           enum:["cash-on-delivery","esewa","khalti","credit-card"],
-           default:"cash-on-delivery"
-       },
+      
        paidAt:{
            type:Date,
            required:true

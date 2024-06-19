@@ -106,3 +106,17 @@ export async function deleteOrder(req, res, next) {
         next(errorHandler(500, error.message))
     }
 }
+
+export const getAllOrders = async (req, res, next) => {
+  
+    try {
+        const orders = await orderModel.find({}).populate("user", "name email");
+        res.status(200).json({
+            success: true,
+            message: "Orders fetched successfully",
+            orders
+        })
+    } catch (error) {
+        next(errorHandler(500, error.message))
+    }   
+}
